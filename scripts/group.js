@@ -1,17 +1,16 @@
-
 function addItem(){
-  const fModule = require('./node_mdules/firebase_module.js');
-  let fbase = fModule.init();
 
 
+  var fb = require('home');
 
-  // var messagesRef = FBapp.ref();
-  console.log(getUserName());
-  var ref = fbase.database().ref("groups");
+
+  var ref = fb.database().ref("item")
+  var user = fb.auth().currentUser;
+  console.log(user.displayName);
+  console.log(getUserName(fb));
+
   var input = document.getElementById("userInput").value;
-  console.log("adddddd");
-  //("#itemList").append("<li class='list-group-item'>MY NEW ITEM</li>");
-  console.log("adddddd");
+
   var ul = document.getElementById("itemList");
   var li = document.createElement("li");
   li.className = "list-group-item";
@@ -19,8 +18,15 @@ function addItem(){
   ul.appendChild(li);
 
 
+  var newRef = ref.push();
+  //ref.push();
+  //var postID = newRef.key;
+  newRef.set({
+    item: input
+  })
+
 }
 
-function getUserName() {
-  return firebase.auth().currentUser.displayName;
+function getUserName(fb) {
+  return fb.auth().currentUser.displayName;
 }
